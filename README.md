@@ -1,2 +1,4 @@
 # Music-Classifier-ML
-Classify Music into Genres
+## Goal Defintiion
+## Project Requirements
+
