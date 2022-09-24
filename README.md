@@ -1,6 +1,6 @@
 # CRISP-DM Process Model
 https://web.archive.org/web/20220401041957/https://www.the-modeling-agency.com/crisp-dm.pdf
-## Business Understaning
+## Business Understanding
 ### Objectives
 1. Build a dataset containg song metadata and their various genres and spectrograph info.
 2. Develop a pipeline to import audio clips from datasets
