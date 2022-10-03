@@ -13,8 +13,7 @@ https://web.archive.org/web/20220401041957/https://www.the-modeling-agency.com/c
 ### Situation
 The user will enter a song clip, then receive a formatted top-n list of genres sorted by confidence value in descending order.
 ### Data Mining Goals
-### Technologies, Libraries, Tools
-## Data Understaning
+## Technologies, Libraries, Tools
 - Tensorflow
 - Keras
 - Librosa
