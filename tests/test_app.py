@@ -8,7 +8,6 @@ Description:
 # Built-in/Generic Imports
 
 # Third-party Libs
-import pytest
 
 # Own Modules
 
@@ -22,3 +21,5 @@ __email__ = 'alec_moldovan@yahoo.com'
 __status__ = 'dev_status'
 
 
+def test_main():
+    assert True
