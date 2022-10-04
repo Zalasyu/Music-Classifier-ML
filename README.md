@@ -1,5 +1,7 @@
 # Project Organization
 
+Inspired by: https://mengdong.github.io/2018/05/28/Python-Machine-Learning-Project-Template/
+
 ![image](https://user-images.githubusercontent.com/54123777/193718883-69d49d68-0d85-4434-88e8-0a59a73a2c99.png)
 
 # CRISP-DM Process Model
