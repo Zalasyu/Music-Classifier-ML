@@ -12,20 +12,9 @@ variables:
   pythonVersion: 3.10
   package: music-classifier-ml
   srcDirectory: src/$(package)
-  testsDirectory: tests/$(package)
+  testsDirectory: tests/
 
-# Trigger only when simple_package or its build has been modified
-trigger:
-  branches:
-    include:
-      - "*"       # We're only uploading to build artifacts, so it's safe to trigger on all branches
-  paths:
-    include:
-    - .azure-pipelines/simple_package.0-basic-build.yml
-    - src/simple_package/*
-    - tests/simple_package/*
-
-# Run on a Microsoft-hosted agent running Ubuntu-16.04
+# Run on a Microsoft-hosted agent running Ubuntu-ltest
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
 pool:
   vmImage: ubuntu-latest
@@ -39,32 +28,21 @@ steps:
   inputs:
     versionSpec: $(pythonVersion)
 
-# Install some tools needed for build (pylint, flake8, etc)
-- bash: pip install -r requirements.build.txt -U --upgrade-strategy eager
-  displayName: Install packages for build
+- script: |
+    curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+    export PATH=$PATH:$HOME/.poetry/bin
+    poetry install --no-root
+  displayName: 'Install dependencies'
 
-# Lint via pylint. We need to find all .py files under src/simple_package and run pylint to avoid errors
-- bash: find $(srcDirectory) $(testsDirectory) -type f -name "*.py" | xargs pylint
-  displayName: "Linting: pylint"
+- script: echo "##vso[task.prependpath]$HOME/.poetry/bin"
+  displayName: Add poetry to PATH
 
-# Lint via flake8. flake8 has better discovery, so we can invoke it directly
-- bash: flake8
-  displayName: "Linting: flake8"
-  workingDirectory: $(srcDirectory)
+- script: |
+    poetry run flake8 src
+    poetry run black src
+  displayName: 'Linter'
 
-# Run tests
-- bash: pytest
-  displayName: Run tests
-  workingDirectory: $(testsDirectory)
+- script: |
+    poetry run pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml
+  displayName: 'Tests'
 
-# Our built source dist & wheel will land in src/simple_package/dist
-- bash: python setup.py sdist bdist_wheel
-  displayName: Build package
-  workingDirectory: $(srcDirectory)
-
-# Upload everything in src/simple_package/dist to the build artifacts for later use or debugging
-- task: PublishPipelineArtifact@0
-  displayName: Publish artifacts
-  inputs:
-    artifactName: dist
-    targetPath: $(srcDirectory)/dist
