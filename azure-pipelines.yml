@@ -9,7 +9,7 @@
 
 # We'll define some variables for later use
 variables:
-  pythonVersion: 3.7
+  pythonVersion: 3.10
   package: simple_package
   srcDirectory: src/$(package)
   testsDirectory: tests/$(package)
@@ -28,7 +28,7 @@ trigger:
 # Run on a Microsoft-hosted agent running Ubuntu-16.04
 # https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops
 pool:
-  vmImage: ubuntu-16.04
+  vmImage: ubuntu-latest
 
 # Steps are the specific tasks that execute code and do things
 steps:
