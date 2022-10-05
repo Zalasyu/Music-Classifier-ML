@@ -10,7 +10,7 @@
 # We'll define some variables for later use
 variables:
   pythonVersion: 3.10
-  package: simple_package
+  package: music-classifier-ml
   srcDirectory: src/$(package)
   testsDirectory: tests/$(package)
 
