@@ -11,6 +11,7 @@ https://web.archive.org/web/20220401041957/https://www.the-modeling-agency.com/c
 ## Business Understanding
 
 ### Objectives
+__Create an automatic music genre recognition (MGR) system and web portal for it.__
 
 1. Build a dataset containg song metadata and their various genres and spectrograph info.
 2. Develop a pipeline to import audio clips from datasets
