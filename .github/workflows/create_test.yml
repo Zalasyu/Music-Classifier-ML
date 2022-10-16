@@ -15,48 +15,81 @@ defaults:
 permissions:
   contents: read
 
+# The jobs that will be run on a pull request to merge to main branch.
 jobs:
-  pre-commit-check:
-    name: Pre-Commit Check
-    runs-on: ubuntu-latest
+  black-formatting-check:
+    name: Check Format
+    runs-on: 'ubuntu-latest'
     steps:
-      - uses: actions/checkout@v2.4.0
-      - uses: actions/setup-python@v2.3.1
-      - uses: pre-commit/action@v2.0.3
+      # Checks-out your repo under $GITHUB_WORKSPACE,
+      # so your workflow can access it.
+      - uses: actions/checkout@v3
+      # Installs a version of Python or PyPy and adding it to PATH
+      # Optionally caching dependencies for pip, pipenv, poetry
+      - uses: actions/setup-python@v2
+      # For checking format: Runs `black --check --diff` on the workflow
+      # runner's clone of the repo and outputs an error code if any
+      # Python file in the repo fails Black's formatting rules
+      - uses: psf/black@stable
 
-  python-check:
-    name: Python Check
-    needs: pre-commit-check
+  build:
+    runs-on: ${{ matrix.os }}
+    needs: black-formatting-check
     strategy:
-      fail-fast: false
       matrix:
-        platform: [ubuntu-latest, macos-latest, windows-latest]
-        python-version: [3.8]
-    runs-on: ${{ matrix.platform }}
+        os:
+          - 'ubuntu-latest'
+          - 'macos-latest'
+          - 'windows-latest'
+        python-version:
+          - '3.9'
+          - '3.10'
+
     steps:
-      - uses: actions/checkout@v2.4.0
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2.3.1
+      # Checkout the repo for this job and set up the Python Version
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Python version is specified and points to matrix option
+      - name: Setup Python
+        uses: actions/setup-python@v2
         with:
-          python-version: ${{ matrix.python-version }}
-      - id: cache-dependencies
-        name: Cache dependencies
-        uses: actions/cache@v2.1.7
+          python-version: ${{matrix.python-version}}
+
+      # Perma-cache Poetry since we only need it for checking pyproject version
+      - name: Cache Poetry
+        id: cache-poetry
+        uses: actions/cache@v2.1.5
         with:
-          path: ${{ github.workspace }}/.venv
+          path: ~/.poetry
+          key: ${{ matrix.os }}-poetry
+      # Only runs when key from caching step changes
+      - name: Install latest version of Poetry
+        if: steps.cache-poetry.outputs.cache-hit != 'true'
+        run: |
+          curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+      # Poetry still needs to be re-prepended to the PATH on each run, since
+      # PATH does not persist between runs.
+      - name: Add Poetry to $PATH
+        run: |
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+      - name: Get Poetry version
+        run: poetry --version
+
+      - name: Check pyproject.toml validity
+        run: poetry check --no-interaction
+      - name: Cache dependencies
+        id: cache-deps
+        uses: actions/cache@v2.1.5
+        with:
+          path: ${{github.workspace}}/.venv
           key: ${{ matrix.os }}-${{ hashFiles('**/poetry.lock') }}
           restore-keys: ${{ matrix.os }}-
-      - name: Install dependencies
-        if: steps.cache-dependencies.cache-hit != 'true'
+      - name: Install deps
+        if: steps.cache-deps.cache-hit != 'true'
         run: |
-          python -m pip install -U pip poetry
-          poetry --version
-          poetry check --no-interaction
           poetry config virtualenvs.in-project true
           poetry install --no-interaction
-      - name: Run tests
-        run: |
-          poetry run pytest -v
-      - name: Build artifacts
-        run: |
-          poetry build --no-interaction
+
+      - name: Run Tests
+        run: poetry run pytest -v
