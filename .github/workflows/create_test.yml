@@ -1,5 +1,5 @@
 
-name: Create_and_Test_Python_App
+name: CI
 
 # When do we want to run these jobs.
 on:
@@ -8,13 +8,27 @@ on:
   pull_request:
     branches: [ "main" ]
 
+defaults:
+  run:
+    shell: bash
+
 permissions:
   contents: read
 
 # The jobs that will be run on a pull request to merge to main branch.
 jobs:
+  pre-commit-check:
+    name: Pre-commit Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # This action provides a version of Python or PyPy and adding to the PATH
+      # Optionally caching dependencies for pip, pipenv, and poetry
+      - uses: actions/setup-python@v4
+      # Clones the code, install python, sets up the pre-commit cache
+      - uses: pre-commit/action@v2.0.3
+  
   build:
-
     # Runs on a server
     runs-on: ubuntu-latest
 
