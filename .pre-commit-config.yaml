@@ -35,13 +35,13 @@ repos:
         entry: poetry run isort .
         pass_filenames: false
         language: system
-#  - repo: local
-#    hooks:
-#      - id: system
-#        name: MyPy
-#        entry: poetry run mypy
-#        pass_filenames: false
-#        language: system
+  - repo: local
+    hooks:
+      - id: system
+        name: MyPy
+        entry: poetry run mypy ./src --ignore-missing-imports
+        pass_filenames: false
+        language: system
 #  - repo: local
 #    hooks:
 #      - id: system
