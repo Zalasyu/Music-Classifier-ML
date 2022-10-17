@@ -98,7 +98,7 @@ class PrepareAudio:
         """Displays the graph that you pass in (raw waveform or vanilla spectrogram). This function is 
         only for visualization purposes and is not vital for processsing the audio file.
 
-        Args: signal = waveform signal, sr = sample rate of signal.
+        Args: signal = waveform signal, sr = sample rate of signal, title = title of graph.
         Return: None
         """
 
