@@ -12,14 +12,16 @@ class MusicData:
 
     def make_training_data(self):
         self.__create_genre_dictionary()
-        # for f in os.listdir(self.RAWDATA):
-            # path = os.path.join(self.RAWDATA, f)
-            # img = cv.imread(path, cv.IMREAD_GRAYSCALE)
-            # call Librosa function
+        # Iterate through all genres
+        for genre in self.genre_dict:
+            # For each file in a genre
+            for f in os.listdir(self.RAWDATA + "/" + genre):
+                # Use Librosa to create a spectrograph - Midhun's code
+                img = []
+                # Add image and label to training data
+                self.training_data.append([np.array(img), np.eye(len(self.genre_dict))[self.genre_dict[genre]]])
 
-            # Need way to create genre dictionary so a one-hot vector can be returned
-            # self.training_data.append()
-
+        # Shuffle and save dataset
         np.random.shuffle(self.training_data)
         np.save("training_data.npy", self.training_data)
 
