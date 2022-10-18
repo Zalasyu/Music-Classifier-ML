@@ -10,14 +10,12 @@ on:
 # The jobs that will be run on a pull request to merge to main branch.
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os:
-          - 'ubuntu-latest'
-        python-version:
-          - '3.9'
-          - '3.10'
+    runs-on: 'ubuntu-latest'
+    inputs:
+      python-version:
+        required: false
+        description: "The Python version to use"
+        default: 3.10
 
     steps:
       #----------------------------------------------
