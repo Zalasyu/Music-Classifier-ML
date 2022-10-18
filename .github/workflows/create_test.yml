@@ -17,7 +17,7 @@ permissions:
 
 # The jobs that will be run on a pull request to merge to main branch.
 jobs:
-  black-formatting-check:
+  Lint-with-flake8:
     name: Check Format
     runs-on: 'ubuntu-latest'
     steps:
@@ -30,11 +30,11 @@ jobs:
       # For checking format: Runs `black --check --diff` on the workflow
       # runner's clone of the repo and outputs an error code if any
       # Python file in the repo fails Black's formatting rules
-      - uses: psf/black@stable
+      - uses: suo/flake8-github-action@releases/v1
 
   build:
     runs-on: ${{ matrix.os }}
-    needs: black-formatting-check
+    needs: Lint-with-flake8
     strategy:
       matrix:
         os:
