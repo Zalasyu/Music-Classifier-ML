@@ -11,6 +11,7 @@ class MusicData:
 
     def make_training_data(self):
         self.__create_genre_dictionary()
+        genre_count = len(self.genre_dict)
         # Iterate through all genres
         for genre in self.genre_dict:
             # For each file in a genre
@@ -18,7 +19,7 @@ class MusicData:
                 # Use Librosa to create a spectrograph - Midhun's code
                 img = []
                 # Add image and label to training data
-                self.training_data.append([np.array(img), np.eye(len(self.genre_dict))[self.genre_dict[genre]]])
+                self.training_data.append([np.array(img), np.eye(genre_count)[self.genre_dict[genre]]])
 
         # Shuffle and save dataset
         np.random.shuffle(self.training_data)
