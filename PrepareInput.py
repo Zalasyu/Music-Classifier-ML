@@ -60,7 +60,7 @@ class PrepareAudio:
 
         # 2. Convert audio file to .wav and save to /Inputs directory (Does so
         # ...for ALL file types, even .wav for the purpose of uniformity)
-        self.convert_to_wav(path)
+        path = self.convert_to_wav(path)
 
         # 3. Get signal and sample rate of choosen audio file
         waveform, sr = torchaudio.load(path)
@@ -86,7 +86,7 @@ class PrepareAudio:
         and only the format is converted.
 
         Args: Path = path to audio file.
-        Return: None
+        Return: Path to converted file
         """
 
         # Extract name of file from path variable
@@ -94,10 +94,14 @@ class PrepareAudio:
         file_name_with_ext = path_parts[len(path_parts)-1]
         idx = len(file_name_with_ext) - file_name_with_ext.index('.')
         self.file_name = file_name_with_ext[:len(file_name_with_ext)-idx]
+        path = f'Inputs/{self.file_name}.wav'
 
         # Convert to .wav and save to directory
         AudioSegment.from_file(path).export(
-            f'Inputs/{self.file_name}.wav', format='wav')
+            path, format='wav')
+
+        # Return path to converted audio file
+        return path
 
     def resample_signal(self, signal, sr):
         """Resamples the passed audio signal to a desired sample rate
@@ -187,5 +191,5 @@ if __name__ == "__main__":
     # for the 'file' variable and the class with take care of the rest!
 
     audio_prepper = PrepareAudio()
-    file = "SPECIFY PATH TO AUDIO FILE HERE"
+    file = "INSERT PATH TO AUDIO FILE HERE"
     audio_prepper.start(file)
