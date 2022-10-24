@@ -67,5 +67,5 @@ t      #----------------------------------------------
           # exit-zero treats all errors as warnings.
           poetry run flake8 . --exclude .venv --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-        #- name: Run Tests
-        #  run: poetry run pytest
+        - name: Run Tests
+          run: poetry run pytest
