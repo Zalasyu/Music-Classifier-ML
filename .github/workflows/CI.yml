@@ -33,7 +33,9 @@ t      #----------------------------------------------
         if: steps.cache.outputs.cache-hit != 'true'
         uses: snok/install-poetry@v1
         with:
-          virtualenvs-create: false
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
       #----------------------------------------------
       #       load cached venv if cache exists
       #----------------------------------------------
