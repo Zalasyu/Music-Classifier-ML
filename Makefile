@@ -28,12 +28,11 @@ check: ## Lint code using pre-commit and run mypy and deptry.
 	@mypy ./src
 
 ## pytest: pytest is a mature full-featured Python testing tool that helps you write better programs. Path: Makefile
-## 		--doctest-modules: run doctests in all .py modules
-## 		--cov: measure coverage for Python modules
 test: ## Test the code with pytest
 	@echo "🚀 Testing code: Running pytest"
 	@pytest tests/ 
 
+## testcov uses pytest-cov to generate a coverage report.
 testcov: ## Test the code with pytest and measure coverage
 	@echo "🚀 Testing code: Running pytest with coverage"
 	@pytest --cov=src tests/ 
@@ -64,6 +63,10 @@ pr: ## Create a pull request
 ## Usage: make push
 push: ## Push changes to git
 	@git push
+
+## Usage: make checkout b="Branch to checkout"
+checkout: ## Checkout a branch
+	@git checkout $(b)
 
 ## Usage: make switch b="Branch to switch to"
 switch: ## Switch to a new branch
