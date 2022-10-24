@@ -70,10 +70,10 @@ jobs:
           poetry run flake8 . --exclude .venv --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
       - name: Run Pylint
-        run: poetry run pylint
+        run: poetry run pylint ./src
 
       - name: Run mypy
-        run: poetry run mypy ./
+        run: poetry run mypy ./src
 
         #- name: Run Tests
         #  run: poetry run pytest
