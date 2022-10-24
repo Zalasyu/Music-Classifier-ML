@@ -43,10 +43,6 @@ jobs:
           installer-parallel: true
 
       #----------------------------------------------
-      #       load cached venv if cache exists
-      #----------------------------------------------
-
-      #----------------------------------------------
       # install dependencies if cache does not exist
       #----------------------------------------------
       - name: Install dependencies
