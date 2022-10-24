@@ -27,6 +27,7 @@ pylint = "^2.15.4"
 coverage = "^6.5.0"
 isort = "^5.10.1"
 flake8 = "^5.0.4"
+pytest-cov = "^4.0.0"
 
 [tool.black]
 line-length = 132
