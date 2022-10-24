@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: ["main"]
+    branches: "**"
   pull_request:
-    branches: ["main"]
+    branches: "**"
 
 # The jobs that will be run on a pull request to merge to main branch.
 jobs:
