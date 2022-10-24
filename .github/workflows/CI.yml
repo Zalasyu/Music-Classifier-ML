@@ -52,11 +52,18 @@ jobs:
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
-      #----------------------------------------------
-      # install your root project, if required
-      #----------------------------------------------
-      - name: Install library
-        run: poetry install --no-interaction
+      # ---------------------------------------------
+      #     Run code format checks
+      # ---------------------------------------------
+      - name: Format check with isort
+        run: poetry run isort --check . --profile black
+
+      - name: Format check with black
+        run: poetry run black --check .
+
+      # ---------------------------------------------
+      #         Run linters
+      # ---------------------------------------------
 
       - name: Lint with flake8
         run: |
@@ -65,6 +72,12 @@ jobs:
 
           # exit-zero treats all errors as warnings.
           poetry run flake8 . --exclude .venv --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Run Pylint
+        run: poetry run pylint
+
+      - name: Run mypy
+        run: poetry run mypy ./
 
         #- name: Run Tests
         #  run: poetry run pytest
