@@ -3,29 +3,6 @@ install: ## Install the poetry environment
 	@poetry install	
 	@poetry shell
 
-## mypy: mypy is a static type checker for Python that aims to combine the benefits of dynamic (or "duck") typing and static typing. Path: Makefile
-## pre-commit: pre-commit is a framework for managing and maintaining multi-language pre-commit hooks. Path: Makefile
-## 		Check pre-commit yaml file for more details
-## 		https://pre-commit.com/
-## 		It invokes the following hooks:
-## 		- Requirements.txt checker
-## 		- Line endings normalizer
-## 		- Tab character checker
-## 		- Black code formatter
-## 		- isort code formatter
-## black: Black is the uncompromising Python code formatter. Path: Makefile
-## flake8: Flake8 is a wrapper around these tools: PyFlakes, pycodestyle, Ned Batchelder’s McCabe script. Path: Makefile
-## pylint: Pylint is a Python static code analysis tool which looks for programming errors, helps enforcing a coding standard, sniffs for code smells and offers simple refactoring suggestions. Path: Makefile
-## isort: isort is a Python utility / library to sort imports alphabetically, and automatically separated into sections and by type. Path: Makefile
-check: ## Lint code using pre-commit and run mypy and deptry.
-	@echo "🚀 Checking Poetry lock file consistency with 'pyproject.toml': Running poetry lock --check"
-	@poetry lock --check
-
-	@echo "🚀 Linting code: Running pre-commit"
-	@pre-commit run -a
-
-	@echo "🚀 Checking code formatting: Running mypy"
-	@mypy ./src
 
 ## pytest: pytest is a mature full-featured Python testing tool that helps you write better programs. Path: Makefile
 test: ## Test the code with pytest

@@ -63,4 +63,4 @@ jobs:
 
 
       - name: Run Tests
-        run: poetry run pytest .
+        run: poetry run pytest tests/tests_MGR.py -v
