@@ -570,6 +570,17 @@ optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
+name = "sndfile"
+version = "0.2.0"
+description = "A CFFI wrapper around libsndfile"
+category = "main"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+cffi = ">=1.0.0"
+
+[[package]]
 name = "soundfile"
 version = "0.11.0"
 description = "An audio library based on libsndfile, CFFI and NumPy"
@@ -680,7 +691,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "847840c75ca908478e65a1a08f123f81ebc8ab5c72ef70dada60c306a9c0cf2a"
+content-hash = "f156274ae4d936c0150901a183eeb0b40ef6c65f439882278cffef88bf40f0d0"
 
 [metadata.files]
 appdirs = [
@@ -1344,6 +1355,9 @@ setuptools-scm = [
 six = [
     {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
     {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
+]
+sndfile = [
+    {file = "sndfile-0.2.0.tar.gz", hash = "sha256:98fadb0420608ce9ff8840603d0aa9d6ce2482eac7e4584059895f0b4231b90d"},
 ]
 soundfile = [
     {file = "soundfile-0.11.0-py2.py3-none-any.whl", hash = "sha256:f4e4f832b1958403fb9726eeea54e0ebf1c7fc2599ff296a7ab1ac062f8048c9"},
