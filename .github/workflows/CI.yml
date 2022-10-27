@@ -48,14 +48,6 @@ jobs:
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root
-      # ---------------------------------------------
-      #     Run code format checks
-      # ---------------------------------------------
-      - name: Format check with isort
-        run: poetry run isort --check . --profile black
-
-      - name: Format check with black
-        run: poetry run black --check .
 
       # ---------------------------------------------
       #         Run linters
